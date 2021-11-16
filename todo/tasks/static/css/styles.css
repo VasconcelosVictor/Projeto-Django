@@ -1,6 +1,9 @@
 .container-fluid {
     padding: 0;
 }
+.container-fluid .row {
+    margin: 0;
+}
 
 /* Navbar */
 
@@ -135,4 +138,9 @@ ul.messages li{
 .step-links .current{
     margin-left: 5px;
     margin-right: 5px;
+}
+/*LOGIN*/
+.auth-card{
+
+    margin-bottom: 30px;
 }

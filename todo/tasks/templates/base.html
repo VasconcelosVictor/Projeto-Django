@@ -12,8 +12,7 @@
     <title>{% block title %}{%endblock%} </title>
 </head>
 <body>
-    <div class="container-
-    fluid">
+    <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">Home</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
@@ -22,16 +21,26 @@
           
             <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
               <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
                 <li class="nav-item ">
-                  <a class="nav-link" href="#">Tarefas </a>
+                  <a class="nav-link" href="/">Tarefas </a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link" href="#">Usuários </a>
                 </li>
+                {% else %}
                 <li class="nav-item ">
-                    <a class="nav-link" href="#">Sobre nós </a>
+                  <a class="nav-link" href="/accounts/login">Entrar </a>
                 </li>
-             
+                {% endif %}
+                <li class="nav-item ">
+                    <a class="nav-link" href="#">Sobre </a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item ">
+                  <a class="nav-link" href="/accounts/logout">Sair </a>
+                </li>
+                {% endif%}
               </ul>
              
             </div>
