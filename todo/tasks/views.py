@@ -13,9 +13,9 @@ from django.contrib.auth.decorators import login_required
 def tasksList(request):
     search = request.GET.get('search')
     if search:
-        tasks = Task.objects.filter(title__icontains=search)
+        tasks = Task.objects.filter(title__icontains=search, user=request.user)
     else:
-        task_list = Task.objects.all().order_by ('-created_at')
+        task_list = Task.objects.all().order_by ('-created_at').filter(user=request.user)
         paginator = Paginator(task_list,3)
         page = request.GET.get('page')
         tasks = paginator.get_page(page)
@@ -30,6 +30,7 @@ def newTask (request):
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save(commit=False)
+            task.user = request.user
             task.done = 'doing'
             task.save()
             messages.info(request, "Tafera criada com sucesso!")
@@ -68,4 +69,15 @@ def helloworld(request):
 
 def yourName(request, name):
     return render(request,'tasks/yourname.html',{'name':name})
-    
+
+
+@login_required
+def changeStatus(request, id):
+    task = get_object_or_404(Task, pk=id)
+
+    if(task.done == 'doing'):
+        task.done = 'done'
+    else:
+        task.done ='doing'
+    task.save()
+    return redirect('/')        

@@ -25,6 +25,9 @@
     letter-spacing: 1px;
 }
 
+
+
+
 /*Botão add*/
 #add-link{
     text-decoration: none;
@@ -78,8 +81,11 @@
     border-bottom: 1px dashed #f5f5f5;
 }
 
+.task-item.done {
+    background-color: #CCC;
+}
 /*icones*/
-.fas.fa-trash, .fas.fa-edit{
+.fas.fa-trash, .fas.fa-edit, .fas.fa-check{
     cursor: pointer;
     margin: 5px;
     font-size: 20px;
@@ -91,6 +97,13 @@
 }
 .fas.fa-edit{
     color: green;
+}
+.fas.fa-check{
+    color: #CCC;
+}
+
+.done .fas.fa-check{
+    color:rgb(127, 52, 212); ;
 }
 
 
@@ -144,3 +157,9 @@ ul.messages li{
 
     margin-bottom: 30px;
 }
+
+.change-form-p {
+    margin-top: 30px;
+    text-align: center;
+}
+
