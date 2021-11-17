@@ -12,8 +12,15 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def tasksList(request):
     search = request.GET.get('search')
+    filter = request.GET.get('filter')
+
     if search:
         tasks = Task.objects.filter(title__icontains=search, user=request.user)
+   
+    elif filter:
+
+        tasks = Task.objects.filter(done=filter, user=request.user)
+
     else:
         task_list = Task.objects.all().order_by ('-created_at').filter(user=request.user)
         paginator = Paginator(task_list,3)

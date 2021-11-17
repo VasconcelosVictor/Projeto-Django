@@ -5,6 +5,20 @@
 {% block content %}
 <div class="offset-1 col-10 list-div">
     <h1>Lista de Tarefas</h1>
+    <div class="container dashboard" >
+        <div class="col-4 dashboard-box" id="dashboard-lastdays">
+            <h4>Finalizadas nos últimos 30 dias </h4>
+            <span>0</span>
+        </div>
+        <div class="col-4 dashboard-box" id="dashboard-done">
+            <h4>Tarefas finalizadas </h4>
+            <span>0</span>
+        </div>
+        <div class="col-4 dashboard-box" id="dashboard-doing">
+            <h4>Tarefas a fazer </h4>
+            <span>0</span>
+        </div>
+    </div>
     <a id="add-link" href="newtask/">
         <div class="col-2 add-div">
           <i class="fas fa-plus"></i> Adicionar tarefa
@@ -15,8 +29,17 @@
             <input class="form-control" type="text" id="search" name="search" placeholder="Digite o nome da tarefa para buscar..." value="{{request.GET.search}}">
             <i class="fas fa-search" id="search-btn"></i>
         </form>
+    </div>
+    <div class="col-12 filter-div">
+        <span>Filtrar por: </span>
+        <select name='filter' id="filter" class="form-control">
+            <option value="">Escolha uma opção </option>
+            <option value="done">Tarefas conluidas</option>
+            <option value="doing">Tarefas a fazer</option>
+        </select>
 
     </div>
+
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}
@@ -35,7 +58,7 @@
                 <a href="delete/{{task.id}}" class="delete-btn"> <span><i class="fas fa-trash"></i></span></a>
                 <a href="edit/{{task.id}}"><span><i class="fas fa-edit"></i></span> </a>
                 <a href="changestatus/{{task.id}}"><span><i class="fas fa-check"></i></span> </a>
-            </li>
+             </li>
         {% endfor%}
     </ul>
     <div class="pagination">
