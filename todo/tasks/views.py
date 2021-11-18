@@ -8,11 +8,14 @@ from .forms import TaskForm
 from .models import Task
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+import datetime
 @login_required
 def tasksList(request):
     search = request.GET.get('search')
     filter = request.GET.get('filter')
+    tasksDoneRecently = Task.objects.filter(done='done', update_at__gt=datetime.datetime.now()-datetime.timedelta(days=30)).count()
+    taskDone = Task.objects.filter(done='done', user=request.user).count()
+    taskDoing = Task.objects.filter(done='doing', user=request.user).count()
 
     if search:
         tasks = Task.objects.filter(title__icontains=search, user=request.user)
@@ -26,7 +29,7 @@ def tasksList(request):
         paginator = Paginator(task_list,3)
         page = request.GET.get('page')
         tasks = paginator.get_page(page)
-    return render(request, 'tasks/list.html', {'tasks': tasks} ) #Criando template django
+    return render(request, 'tasks/list.html', {'tasks': tasks,'tasksrecently': tasksDoneRecently,  'taskDone': taskDone,'taskDoing': taskDoing} ) #Criando template django
 @login_required
 def taskView (request, id):
     task = get_object_or_404(Task, pk=id)
